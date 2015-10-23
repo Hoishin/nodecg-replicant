@@ -1,0 +1,70 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="nodecg-replicant-targeting.html">
+
+<!--
+The `nodecg-replicant` element binds to a Replicant.
+
+    <nodecg-replicant name="myReplicant" bundle="my-bundle"></nodecg-replicant>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<script>
+    'use strict';
+
+    Polymer({
+
+        is: 'nodecg-replicant',
+
+        /**
+         * Fired when the value of the target replicant changes.
+         *
+         * @event change
+         */
+
+        /**
+         * Fired when a new replicant is targeted.
+         *
+         * @event retarget
+         */
+
+        hostAttributes: {
+            hidden: true
+        },
+
+        behaviors: [
+            Polymer.NodeCGReplicantTargetingBehavior
+        ],
+
+        get value () {
+            if (this.replicant) {
+                return this.replicant.value;
+            }
+        },
+
+        set value (newVal) {
+            if (this.replicant) {
+                return this.replicant.value = newVal;
+            }
+        },
+
+        /**
+         * The current value of the target replicant.
+         *
+         * @return {*}
+         */
+
+        _replicantChanged: function(oldVal, newVal, changes) {
+            this.fire('value-changed', {
+                value: newVal
+            }, {bubbles: false});
+            this.fire('change', {
+                oldVal: oldVal,
+                newVal: newVal,
+                changes: changes
+            }, {bubbles: false})
+        }
+
+    });
+</script>

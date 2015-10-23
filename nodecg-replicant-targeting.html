@@ -1,0 +1,80 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<script>
+    'use strict';
+
+    /**
+     * Use `Polymer.PaperInputAddonBehavior` to implement an add-on for `<paper-input-container>`. A
+     * add-on appears below the input, and may display information based on the input value and
+     * validity such as a character counter or an error message.
+     * @polymerBehavior
+     */
+    Polymer.NodeCGReplicantTargetingBehavior = {
+
+        properties: {
+            /**
+             * The name of the target replicant.
+             */
+            name: {
+                type: String
+            },
+
+            /**
+             * The bundle namespace of the target replicant.
+             */
+            bundle: {
+                type: String,
+                value: function() {
+                    if (typeof window.nodecg === 'object') {
+                        return window.nodecg.bundleName
+                    }
+                }
+            }
+        },
+
+        get _hasChangeCallback () {
+            return typeof this._replicantChanged === 'function';
+        },
+
+        observers: [
+            '_targetChanged(name, bundle)'
+        ],
+
+        _targetChanged: function(name, bundle) {
+            // If there is an existing replicant, remove the event listener
+            if (this.replicant && this._hasChangeCallback) {
+                this.replicant.removeListener('change', this._replicantChanged);
+            }
+
+            this._declareReplicant(name, bundle);
+        },
+
+        _declareReplicant: function(name, bundle) {
+            if (this._waitingForDOMReady) return;
+
+            if (document.readyState !== 'complete' && !this._DOMContentLoaded) {
+                this._waitingForDOMReady = true;
+                document.addEventListener('DOMContentLoaded', function() {
+                    this._waitingForDOMReady = false;
+                    this._DOMContentLoaded = true;
+                    this._declareReplicant(name, bundle);
+                }.bind(this), false);
+                return;
+            }
+
+            if (this.defaultValue) {
+                this.replicant = NodeCG.Replicant(name, bundle, {defaultValue: this.defaultValue});
+            } else {
+                this.replicant = NodeCG.Replicant(name, bundle);
+            }
+
+            if (this._hasChangeCallback) {
+                this.replicant.on('change', this._replicantChanged.bind(this));
+            }
+
+            this.fire('retarget', {name: name, bundle: bundle}, {bubbles: false})
+        }
+
+    };
+
+</script>
