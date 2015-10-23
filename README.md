@@ -1,0 +1,2 @@
+# nodecg-replicant
+Declarative Replicants
