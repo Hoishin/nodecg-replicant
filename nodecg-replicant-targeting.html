@@ -15,6 +15,10 @@
      *     }
      *
      * The target replicant can be freely changed at any time.
+     *
+     * It is important to note that the replicant will not be declared until the element has been attached and the current
+     * task has finished. This is to avoid two-way binding conflicts. For example, when binding to an `iron-input`
+     * element, the `iron-input` will default to a `bind-value` of `""`, which will then be assigned to the Replicant.
      * @polymerBehavior
      */
     Polymer.NodeCGReplicantTargetingBehavior = {
@@ -44,6 +48,14 @@
                         return window.nodecg.bundleName
                     }
                 }
+            },
+
+            /**
+             * The default value to provide to the replicant. Although this property is declared with a type of
+             * `Object`, this property can be of any type.
+             */
+            replicantDefault: {
+                type: Object
             }
         },
 
@@ -55,6 +67,16 @@
             '_targetChanged(replicantName, replicantBundle)'
         ],
 
+        attached: function() {
+            this.async(function() {
+                this._readyToDeclareReplicant = true;
+
+                if (this.replicantName && this.replicantBundle) {
+                    this._declareReplicant(this.replicantName, this.replicantBundle);
+                }
+            })
+        },
+
         _targetChanged: function(name, bundle) {
             // If there is an existing replicant, remove the event listener
             if (this.replicant && this._hasChangeCallback) {
@@ -65,20 +87,10 @@
         },
 
         _declareReplicant: function(name, bundle) {
-            if (this._waitingForDOMReady) return;
+            if (!this._readyToDeclareReplicant) return;
 
-            if (document.readyState !== 'complete' && !this._DOMContentLoaded) {
-                this._waitingForDOMReady = true;
-                document.addEventListener('DOMContentLoaded', function() {
-                    this._waitingForDOMReady = false;
-                    this._DOMContentLoaded = true;
-                    this._declareReplicant(name, bundle);
-                }.bind(this), false);
-                return;
-            }
-
-            if (this.defaultValue) {
-                this.replicant = NodeCG.Replicant(name, bundle, {defaultValue: this.defaultValue});
+            if (this.replicantDefault) {
+                this.replicant = NodeCG.Replicant(name, bundle, {defaultValue: this.replicantDefault});
             } else {
                 this.replicant = NodeCG.Replicant(name, bundle);
             }
