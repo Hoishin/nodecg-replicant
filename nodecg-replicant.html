@@ -69,7 +69,7 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
 
             if (changes) {
                 changes.forEach(function (change) {
-                    var pathParts = change.path;
+                    var pathParts = _.clone(change.path);
                     pathParts.unshift('value');
                     var path = pathParts.join('.');
 
