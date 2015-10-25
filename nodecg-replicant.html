@@ -63,39 +63,43 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
          */
 
         _replicantChanged: function(oldVal, newVal, changes) {
-            this.fire('value-changed', {
-                value: newVal
-            }, {bubbles: false});
+            if (!this._notifyingSplices) {
+                this.fire('value-changed', {
+                    value: newVal
+                }, {bubbles: false});
 
-            if (changes) {
-                changes.forEach(function (change) {
-                    var pathParts = _.clone(change.path);
-                    pathParts.unshift('value');
-                    var path = pathParts.join('.');
+                if (changes) {
+                    changes.forEach(function (change) {
+                        var pathParts = _.clone(change.path);
+                        pathParts.unshift('value');
+                        var path = pathParts.join('.');
 
-                    switch (change.type) {
-                        case 'add':
-                        case 'update':
-                        case 'delete':
-                            this.notifyPath(path, change.newValue);
-                            break;
-                        case 'splice':
-                            for (var i = 0; i < change.removedCount; i++) {
-                                change.removed[i] = objectPath.get(this._oldValue, change.path)[change.index + i];
-                            }
+                        switch (change.type) {
+                            case 'add':
+                            case 'update':
+                            case 'delete':
+                                this.notifyPath(path, change.newValue);
+                                break;
+                            case 'splice':
+                                for (var i = 0; i < change.removedCount; i++) {
+                                    change.removed[i] = objectPath.get(this._oldValue, change.path)[change.index + i];
+                                }
 
-                            this.notifySplices(path, [change]);
-                    }
-                }.bind(this));
+                                this._notifyingSplices = true;
+                                this.notifySplices(path, [change]);
+                                this._notifyingSplices = false;
+                        }
+                    }.bind(this));
+                }
+
+                this._oldValue = _.clone(this.replicant.value);
+
+                this.fire('change', {
+                    oldVal: oldVal,
+                    newVal: newVal,
+                    changes: changes
+                }, {bubbles: false});
             }
-
-            this._oldValue = _.clone(this.replicant.value);
-
-            this.fire('change', {
-                oldVal: oldVal,
-                newVal: newVal,
-                changes: changes
-            }, {bubbles: false})
         }
 
     });
