@@ -76,7 +76,7 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
                     // squelch splice notifications to avoid issues
                     var prop = change.path.slice(-1)[0];
                     var parent = objectPath.get(newVal, change.path.slice(0, -1));
-                    if (prop !== 'splices' || !_.isArray(parent)) {
+                    if (prop === 'splices' && _.isArray(parent)) {
                         return;
                     }
 
