@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
+<script src="../lodash/lodash.js"></script>
+<script src="../object-path/index.js"></script>
 <link rel="import" href="nodecg-replicant-targeting.html">
 
 <!--
@@ -78,10 +80,16 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
                             this.notifyPath(path, change.newValue);
                             break;
                         case 'splice':
+                            for (var i = 0; i < change.removedCount; i++) {
+                                change.removed[i] = objectPath.get(this._oldValue, change.path)[change.index + i];
+                            }
+
                             this.notifySplices(path, [change]);
                     }
                 }.bind(this));
             }
+
+            this._oldValue = _.clone(this.replicant.value);
 
             this.fire('change', {
                 oldVal: oldVal,

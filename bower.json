@@ -25,7 +25,9 @@
   ],
   "dependencies": {
     "polymer": "~1.1.5",
-    "iron-component-page": "PolymerElements/iron-component-page#~1.0.8"
+    "iron-component-page": "PolymerElements/iron-component-page#~1.0.8",
+    "lodash": "~3.10.1",
+    "object-path": "~0.9.3"
   },
   "version": "0.4.0"
 }
