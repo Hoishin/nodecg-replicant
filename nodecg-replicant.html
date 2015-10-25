@@ -78,7 +78,7 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
                             this.notifyPath(path, change.newValue);
                             break;
                         case 'splice':
-                            this.notifySplices(path, change.splices)
+                            this.notifySplices(path, [change]);
                     }
                 }.bind(this));
             }
