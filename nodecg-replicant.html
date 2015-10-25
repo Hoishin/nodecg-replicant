@@ -87,7 +87,6 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
 
                                 this._notifyingSplices = true;
                                 this.notifySplices(path, [change]);
-                                this._notifyingSplices = false;
                         }
                     }.bind(this));
                 }
@@ -99,6 +98,10 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
                     newVal: newVal,
                     changes: changes
                 }, {bubbles: false});
+            }
+            else {
+                // hacky method to squelch duplicate splice notifications
+                this._notifyingSplices = false;
             }
         }
 
