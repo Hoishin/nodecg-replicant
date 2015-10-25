@@ -64,6 +64,22 @@ element, the `iron-input` will default to a `bind-value` of `""`, which will the
             this.fire('value-changed', {
                 value: newVal
             }, {bubbles: false});
+
+            if (changes) {
+                changes.forEach(function (change) {
+                    var path = 'value.' + change.path.join('.');
+                    switch (change.type) {
+                        case 'add':
+                        case 'update':
+                        case 'delete':
+                            this.notifyPath(path, change.newValue);
+                            break;
+                        case 'splice':
+                            this.notifySplices(path, change.splices)
+                    }
+                }.bind(this));
+            }
+
             this.fire('change', {
                 oldVal: oldVal,
                 newVal: newVal,
