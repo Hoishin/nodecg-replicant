@@ -1,7 +1,7 @@
 'use strict';
 
 var objectPath = require('object-path');
-var lodash = require('lodash');
+var clone = require('clone');
 
 Polymer({
     is: 'nodecg-replicant',
@@ -44,14 +44,14 @@ Polymer({
 
         if (changes) {
             changes.forEach(function (change) {
-                var pathParts = lodash.clone(change.path);
+                var pathParts = clone(change.path);
                 pathParts.unshift('value');
                 var path = pathParts.join('.');
 
                 // squelch splice notifications to avoid issues
                 var prop = change.path.slice(-1)[0];
                 var parent = objectPath.get(newVal, change.path.slice(0, -1));
-                if (prop === 'splices' && lodash.isArray(parent)) {
+                if (prop === 'splices' && Array.isArray(parent)) {
                     return;
                 }
 
