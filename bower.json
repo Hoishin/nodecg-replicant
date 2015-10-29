@@ -27,5 +27,5 @@
     "polymer": "^1.1.5",
     "iron-component-page": "PolymerElements/iron-component-page#~1.0.8"
   },
-  "version": "0.4.1"
+  "version": "0.5.1"
 }
