@@ -71,7 +71,7 @@ Polymer({
             }.bind(this));
         }
 
-        this._oldValue = lodash.clone(this.replicant.value);
+        this._oldValue = clone(this.replicant.value);
 
         this.fire('change', {
             oldVal: oldVal,
