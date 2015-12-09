@@ -62,8 +62,14 @@ Polymer({
                         this.notifyPath(path, change.newValue);
                         break;
                     case 'splice':
+                        /* Because Polymer is keeping its own internal copy of the Replicants value in
+                           a WeakMap, we have to alter the `removed` items of our splice record to point
+                           to the items already in Polymer's store, otherwise it will fail to remove them. */
+                        var coll = Polymer._collections.get(this.value);
+                        var storeKeys = Object.keys(coll.store);
                         for (var i = 0; i < change.removedCount; i++) {
-                            change.removed[i] = objectPath.get(this._oldValue, change.path)[change.index + i];
+                            var removedItemIndexInStore = storeKeys[change.index];
+                            change.removed[i] = objectPath.get(coll.store, change.path)[removedItemIndexInStore];
                         }
 
                         this.notifySplices(path, [change]);
