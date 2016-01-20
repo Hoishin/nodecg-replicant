@@ -15,7 +15,8 @@ is desirable. For example, it can be used to create a two-way binding with a `pa
 
 It is important to note that the replicant will not be declared until the element has been attached and the current
 task has finished. This is to avoid two-way binding conflicts. For example, when binding to an `iron-input`
-element, the `iron-input` will default to a `bind-value` of `""`, which will then be assigned to the Replicant.
+element, the `iron-input` will default to a `bind-value` of `""`, which would then be assigned to the Replicant,
+deleting the Replicant's intended value.
 
 @demo demo/index.html
 @hero hero.svg
