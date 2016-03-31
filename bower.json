@@ -1,5 +1,6 @@
 {
   "name": "nodecg-replicant",
+  "version": "0.5.5",
   "homepage": "https://github.com/NodeCGElements/nodecg-replicant",
   "authors": [
     "Alex Van Camp <email@alexvan.camp>"
@@ -28,6 +29,5 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~1.1.4"
-  },
-  "version": "0.5.4"
+  }
 }
