@@ -1,0 +1,22 @@
+{
+	"extends": "xo/esnext",
+	"env": {
+		"browser": true
+	},
+	"globals": {
+		"Polymer": true,
+		"NodeCG": true
+	},
+	"rules": {
+		"new-cap": [0],
+		"babel/new-cap": [
+			2,
+			{
+				"capIsNewExceptions": [
+					"Polymer",
+					"NodeCG.Replicant"
+				]
+			}
+		]
+	}
+}

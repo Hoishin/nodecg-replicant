@@ -22,14 +22,23 @@
   },
   "homepage": "https://github.com/nodecg/nodecg-replicant#readme",
   "devDependencies": {
+    "babel-eslint": "^6.0.3",
+    "babel-preset-es2015": "^6.6.0",
+    "babelify": "^7.2.0",
     "browserify": "^11.2.0",
-    "minifyify": "^7.1.0"
+    "eslint": "^2.8.0",
+    "eslint-config-xo": "^0.13.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "polylint": "^2.10.1"
   },
   "dependencies": {
-    "clone": "^1.0.2",
     "object-path": "^0.9.2"
   },
   "scripts": {
-    "build": "browserify nodecg-replicant.src.js -d -p [minifyify --map nodecg-replicant.map.json --output nodecg-replicant.map.json ] > nodecg-replicant.js"
+    "build": "browserify nodecg-replicant.src.js -d -t [babelify --presets [es2015]] > nodecg-replicant.js",
+    "test": "npm run static",
+    "static": "npm run static:js && npm run static:polymer",
+    "static:js": "eslint nodecg-replicant.src.js nodecg-replicant-targeting.js",
+    "static:polymer": "polylint --input nodecg-replicant.html nodecg-replicant-targeting.html"
   }
 }
