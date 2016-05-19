@@ -1,6 +1,6 @@
 {
   "name": "nodecg-replicant",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "A declarative implementation of NodeCG Replicants.",
   "main": "nodecg-replicant.html",
   "repository": {

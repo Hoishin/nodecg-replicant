@@ -1,3 +1,23 @@
+<a name="0.5.6"></a>
+## [0.5.6](https://github.com/nodecg/nodecg-replicant/compare/v0.5.5...v0.5.6) (2016-05-19)
+
+
+### Bug Fixes
+
+* fix changes not always being propagated([5c76f40](https://github.com/nodecg/nodecg-replicant/commit/5c76f40))
+
+
+### Styles
+
+* **all:** adopt XO style([890d84e](https://github.com/nodecg/nodecg-replicant/commit/890d84e))
+
+
+### BREAKING CHANGES
+
+* all: Removed undocumented `_oldValue` property.
+
+
+
 <a name="0.5.5"></a>
 ## [0.5.5](https://github.com/nodecg/nodecg-replicant/compare/v0.5.4...v0.5.5) (2016-03-31)
 
