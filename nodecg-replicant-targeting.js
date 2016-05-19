@@ -8,8 +8,8 @@
  * To listen to `change` events emitted by this replicant, add a method called `_replicantChanged` to your bundle.
  *
  *     _replicantChanged: function(oldVal, newVal, changes) {
-     *          // do work...
-     *     }
+ *          // do work...
+ *     }
  *
  * The target replicant can be freely changed at any time.
  *

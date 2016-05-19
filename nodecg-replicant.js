@@ -1,4 +1,8 @@
+/* eslint-env node */
+/* eslint-disable accessor-pairs */
 'use strict';
+
+const clone = require('clone');
 
 Polymer({
 	is: 'nodecg-replicant',
@@ -9,6 +13,12 @@ Polymer({
 	 * @event change
 	 */
 
+	properties: {
+		value: {
+			notify: true
+		}
+	},
+
 	hostAttributes: {
 		hidden: true
 	},
@@ -17,12 +27,6 @@ Polymer({
 		Polymer.NodeCGReplicantTargetingBehavior
 	],
 
-	get value() {
-		if (this.replicant) {
-			return this.replicant.value;
-		}
-	},
-
 	set value(newVal) {
 		if (this.replicant) {
 			this.replicant.value = newVal;
@@ -30,14 +34,12 @@ Polymer({
 		}
 	},
 
-	/**
-	 * The current value of the target replicant.
-	 *
-	 * @return {*}
-	 */
-	_replicantChanged(newVal, oldVal, operations) {
-		this.fire('value-changed', {value: newVal}, {bubbles: false});
-		this.notifyPath('value', newVal);
-		this.fire('change', {oldVal, newVal, operations}, {bubbles: false});
+	_replicantChanged: function (newVal, oldVal, operations) {
+		this.value = clone(newVal);
+		this.fire('change', {
+			newVal: newVal,
+			oldVal: oldVal,
+			operations: operations
+		}, {bubbles: false});
 	}
 });
