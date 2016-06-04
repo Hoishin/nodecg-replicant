@@ -13,12 +13,6 @@ Polymer({
 	 * @event change
 	 */
 
-	properties: {
-		value: {
-			notify: true
-		}
-	},
-
 	hostAttributes: {
 		hidden: true
 	},
@@ -26,6 +20,12 @@ Polymer({
 	behaviors: [
 		Polymer.NodeCGReplicantTargetingBehavior
 	],
+
+	get value() {
+		if (this.replicant) {
+			return this.replicant.value;
+		}
+	},
 
 	set value(newVal) {
 		if (this.replicant) {
@@ -35,9 +35,10 @@ Polymer({
 	},
 
 	_replicantChanged: function (newVal, oldVal, operations) {
-		this.value = clone(newVal);
+		const clonedNewVal = clone(newVal);
+		this.fire('value-changed', {value: clonedNewVal}, {bubbles: false});
 		this.fire('change', {
-			newVal: newVal,
+			newVal: clonedNewVal,
 			oldVal: oldVal,
 			operations: operations
 		}, {bubbles: false});
