@@ -1,3 +1,13 @@
+<a name="0.5.7"></a>
+## [0.5.7](https://github.com/nodecg/nodecg-replicant/compare/v0.5.6...v0.5.7) (2016-06-04)
+
+
+### Bug Fixes
+
+* setting a new value wasn't working ([3e65cfd](https://github.com/nodecg/nodecg-replicant/commit/3e65cfd))
+
+
+
 <a name="0.5.6"></a>
 ## [0.5.6](https://github.com/nodecg/nodecg-replicant/compare/v0.5.5...v0.5.6) (2016-05-19)
 
