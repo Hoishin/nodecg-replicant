@@ -7,9 +7,16 @@ const clone = require('clone');
 Polymer({
 	is: 'nodecg-replicant',
 
+	properties: {
+		value: {
+			type: Object,
+			observer: '_exposedValueChanged',
+			notify: true
+		}
+	},
+
 	/**
 	 * Fired when the value of the target replicant changes.
-	 *
 	 * @event change
 	 */
 
@@ -21,14 +28,8 @@ Polymer({
 		Polymer.NodeCGReplicantTargetingBehavior
 	],
 
-	get value() {
-		if (this.replicant) {
-			return this.replicant.value;
-		}
-	},
-
-	set value(newVal) {
-		if (this.replicant) {
+	_exposedValueChanged: function (newVal) {
+		if (!this._ignoreExposedValueObserver && this.replicant) {
 			this.replicant.value = newVal;
 			return this.replicant.value;
 		}
@@ -36,7 +37,9 @@ Polymer({
 
 	_replicantChanged: function (newVal, oldVal, operations) {
 		const clonedNewVal = clone(newVal);
-		this.fire('value-changed', {value: clonedNewVal}, {bubbles: false});
+		this._ignoreExposedValueObserver = true;
+		this.value = clonedNewVal;
+		this._ignoreExposedValueObserver = false;
 		this.fire('change', {
 			newVal: clonedNewVal,
 			oldVal: oldVal,
