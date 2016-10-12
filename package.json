@@ -22,11 +22,9 @@
   },
   "homepage": "https://github.com/nodecg/nodecg-replicant#readme",
   "devDependencies": {
-    "babel-eslint": "^6.0.4",
     "clone": "^1.0.2",
-    "eslint": "^2.10.2",
-    "eslint-config-xo": "^0.14.1",
-    "eslint-plugin-babel": "^3.2.0",
+    "eslint": "^3.7.1",
+    "eslint-config-xo": "^0.17.0",
     "polylint": "^2.10.1",
     "webpack": "^1.13.0"
   },
