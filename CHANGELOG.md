@@ -1,3 +1,14 @@
+<a name="0.5.9"></a>
+## [0.5.9](https://github.com/nodecg/nodecg-replicant/compare/v0.5.8...v0.5.9) (2017-04-28)
+
+
+### Bug Fixes
+
+* dramatically reduce bundled filesize ([c038588](https://github.com/nodecg/nodecg-replicant/commit/c038588))
+* support replicant schemas ([c43e7e4](https://github.com/nodecg/nodecg-replicant/commit/c43e7e4))
+
+
+
 <a name="0.5.8"></a>
 ## [0.5.8](https://github.com/nodecg/nodecg-replicant/compare/v0.5.7...v0.5.8) (2016-06-10)
 
