@@ -10,5 +10,10 @@ module.exports = {
 		filename: '[name].js',
 		path: __dirname
 	},
-	devtool: 'source-map'
+	devtool: 'source-map',
+	module: {
+		noParse: [
+			/clone/
+		]
+	}
 };
