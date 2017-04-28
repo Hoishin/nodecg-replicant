@@ -88,11 +88,15 @@ Polymer.NodeCGReplicantTargetingBehavior = {
 			return;
 		}
 
+		const opts = {
+			schemaPath: `bundles/${encodeURIComponent(bundle)}/schemas/${encodeURIComponent(name)}.json`
+		};
+
 		if (this.replicantDefault) {
-			this.replicant = NodeCG.Replicant(name, bundle, {defaultValue: this.replicantDefault});
-		} else {
-			this.replicant = NodeCG.Replicant(name, bundle);
+			opts.defaultValue = this.replicantDefault;
 		}
+
+		this.replicant = NodeCG.Replicant(name, bundle, opts);
 
 		if (this._hasChangeCallback) {
 			this.replicant.on('change', this._replicantChanged.bind(this));
