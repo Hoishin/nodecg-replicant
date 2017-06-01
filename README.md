@@ -14,7 +14,7 @@ bower install --save NodeCGElements/nodecg-replicant
 
 ## Usage
 ```html
-<nodecg-replicant replicant-name="my-replicant"></nodecg-replicant>
+<nodecg-replicant replicant-name="my-replicant" value="{{myReplicantValue}}"></nodecg-replicant>
 ```
 
 ## Contributing
