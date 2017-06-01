@@ -1,6 +1,6 @@
 {
   "name": "nodecg-replicant",
-  "version": "0.5.9",
+  "version": "1.0.0",
   "homepage": "https://github.com/NodeCGElements/nodecg-replicant",
   "authors": [
     "Alex Van Camp <email@alexvan.camp>"
@@ -12,9 +12,9 @@
     "nodecg",
     "dashboard",
     "panel",
-    "element",
     "polymer",
-    "component"
+    "web-components",
+    "web-component"
   ],
   "license": "MIT",
   "ignore": [
@@ -25,9 +25,16 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.7.0"
+    "polymer": "Polymer/polymer#^2.0.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.1.7"
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "test-fixture": "PolymerElements/test-fixture#3.0.0-rc.1",
+    "web-component-tester": "Lange/web-component-tester#patch-1",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
+    "mock-nodecg": "nodecg/mock-nodecg#^1.0.1"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0"
   }
 }

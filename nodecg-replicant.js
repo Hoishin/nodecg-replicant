@@ -1,49 +1,40 @@
-/* eslint-env node */
-/* eslint-disable accessor-pairs */
-'use strict';
-
-const clone = require('clone');
-
-Polymer({
-	is: 'nodecg-replicant',
-
-	properties: {
-		value: {
-			type: Object,
-			observer: '_exposedValueChanged',
-			notify: true
-		}
-	},
-
+class NodecgReplicant extends Polymer.NodeCGReplicantTargeting(Polymer.MutableData(Polymer.Element)) {
 	/**
 	 * Fired when the value of the target replicant changes.
 	 * @event change
 	 */
 
-	hostAttributes: {
-		hidden: true
-	},
+	static get is() {
+		return 'nodecg-replicant';
+	}
 
-	behaviors: [
-		Polymer.NodeCGReplicantTargetingBehavior
-	],
+	static get properties() {
+		return {
+			value: {
+				type: Object,
+				observer: '_exposedValueChanged',
+				notify: true
+			}
+		};
+	}
 
-	_exposedValueChanged: function (newVal) {
+	_exposedValueChanged(newVal) {
 		if (!this._ignoreExposedValueObserver && this.replicant) {
 			this.replicant.value = newVal;
 			return this.replicant.value;
 		}
-	},
-
-	_replicantChanged: function (newVal, oldVal, operations) {
-		const clonedNewVal = clone(newVal);
-		this._ignoreExposedValueObserver = true;
-		this.value = clonedNewVal;
-		this._ignoreExposedValueObserver = false;
-		this.fire('change', {
-			newVal: clonedNewVal,
-			oldVal: oldVal,
-			operations: operations
-		}, {bubbles: false});
 	}
-});
+
+	_replicantValueChanged(newVal, oldVal, operations) {
+		this._ignoreExposedValueObserver = true;
+		this.set('value', newVal);
+		this._ignoreExposedValueObserver = false;
+		this.dispatchEvent(new CustomEvent('change', {
+			detail: {newVal, oldVal, operations},
+			bubbles: true,
+			composed: true
+		}));
+	}
+}
+
+customElements.define('nodecg-replicant', NodecgReplicant);

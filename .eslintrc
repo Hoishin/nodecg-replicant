@@ -1,16 +1,26 @@
 {
-	"extends": "xo/browser",
+	"extends": "xo/esnext",
+	"env": {
+		"node": false,
+		"browser": true
+	},
 	"globals": {
 		"Polymer": true,
-		"NodeCG": true
+		"NodeCG": true,
+		"customElements": true
 	},
+	"plugins": [
+		"html"
+	],
 	"rules": {
 		"new-cap": [
 			2,
 			{
 				"capIsNewExceptions": [
+					"NodeCG.Replicant",
 					"Polymer",
-					"NodeCG.Replicant"
+					"Polymer.MutableData",
+					"Polymer.NodeCGReplicantTargeting"
 				]
 			}
 		]

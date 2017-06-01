@@ -1,6 +1,6 @@
 {
   "name": "nodecg-replicant",
-  "version": "0.5.9",
+  "version": "1.0.0",
   "description": "A declarative implementation of NodeCG Replicants.",
   "main": "nodecg-replicant.html",
   "repository": {
@@ -22,18 +22,18 @@
   },
   "homepage": "https://github.com/nodecg/nodecg-replicant#readme",
   "devDependencies": {
-    "clone": "^1.0.2",
-    "eslint": "^3.7.1",
-    "eslint-config-xo": "^0.17.0",
-    "polylint": "^2.10.1",
-    "webpack": "^1.13.0"
+    "coveralls": "^2.13.1",
+    "eslint": "^3.18.0",
+    "eslint-config-xo": "^0.18.1",
+    "eslint-plugin-html": "^2.0.1",
+    "polyserve": "github:t2ym/polyserve.git#0.19.0-istanbul.1",
+    "web-component-tester": "github:t2ym/web-component-tester#6.0.0-wct6-plugin.4",
+    "web-component-tester-istanbul": "github:t2ym/web-component-tester-istanbul#0.10.1-wct6.11"
   },
   "scripts": {
-    "test": "npm run static",
-    "static": "npm run static:js && npm run static:polymer",
-    "static:js": "eslint nodecg-replicant.src.js nodecg-replicant-targeting.js",
-    "static:polymer": "polylint --input nodecg-replicant.html nodecg-replicant-targeting.html",
-    "build": "npm run static && webpack --optimize-minimize",
-    "watch": "webpack --progress --colors --watch"
+    "pretest": "eslint **/*.js **/*.html",
+    "test": "wct test/*.html",
+    "serve": "polyserve",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   }
 }

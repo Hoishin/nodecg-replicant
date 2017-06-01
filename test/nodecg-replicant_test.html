@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+	<title>nodecg-replicant test</title>
+
+	<script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../mock-nodecg/dist/mock-nodecg.js"></script>
+	<script>
+		/* global MockNodeCG */
+		window.nodecg = new MockNodeCG({bundleName: 'foo-bundle'});
+	</script>
+
+	<link rel="import" href="../../polymer/lib/utils/flush.html">
+	<link rel="import" href="../nodecg-replicant.html">
+</head>
+<body>
+	<test-fixture id="nodecg-replicant">
+		<template>
+			<nodecg-replicant></nodecg-replicant>
+		</template>
+	</test-fixture>
+
+	<test-fixture id="nodecg-replicant with name">
+		<template>
+			<nodecg-replicant replicant-name="bar"></nodecg-replicant>
+		</template>
+	</test-fixture>
+
+	<test-fixture id="nodecg-replicant with name and bundle">
+		<template>
+			<nodecg-replicant replicant-name="bar" replicant-bundle="baz-bundle"></nodecg-replicant>
+		</template>
+	</test-fixture>
+
+	<script>
+		function afterNextRenderPromise() {
+			return new Promise(resolve => {
+				Polymer.RenderStatus.afterNextRender(this, () => {
+					resolve();
+				});
+			});
+		}
+
+		/* eslint-env mocha */
+		/* global fixture assert */
+		suite('nodecg-replicant', () => {
+			let nodecgReplicant; // eslint-disable-line no-unused-vars
+
+			setup(() => {
+				nodecgReplicant = fixture('nodecg-replicant');
+			});
+
+			test('declares the replicant when just replicant-name is provided', done => {
+				const nodecgReplicant = fixture('nodecg-replicant with name');
+				Polymer.RenderStatus.afterNextRender(this, () => {
+					assert.isOk(nodecgReplicant.replicant);
+					assert.equal(nodecgReplicant.replicantName, 'bar');
+					assert.equal(nodecgReplicant.replicantBundle, 'foo-bundle');
+					done();
+				});
+			});
+
+			test('declares the replicant when both replicant-name and replicant-bundle are provided', done => {
+				const nodecgReplicant = fixture('nodecg-replicant with name and bundle');
+				Polymer.RenderStatus.afterNextRender(this, () => {
+					assert.isOk(nodecgReplicant.replicant);
+					assert.equal(nodecgReplicant.replicantName, 'bar');
+					assert.equal(nodecgReplicant.replicantBundle, 'baz-bundle');
+					done();
+				});
+			});
+
+			test('can change which replicant is targeted', async () => {
+				nodecgReplicant.replicantName = 'foo';
+				await afterNextRenderPromise();
+				const firstReplicant = nodecgReplicant.replicant;
+				assert.isOk(nodecgReplicant.replicant);
+				assert.equal(nodecgReplicant.replicantName, 'foo');
+				assert.equal(nodecgReplicant.replicantBundle, 'foo-bundle');
+
+				nodecgReplicant.replicantName = 'bar';
+				assert.isOk(nodecgReplicant.replicant);
+				assert.equal(nodecgReplicant.replicantName, 'bar');
+				assert.equal(nodecgReplicant.replicantBundle, 'foo-bundle');
+				assert.notEqual(nodecgReplicant.Replicant, firstReplicant);
+			});
+
+			test('removes the old change listener when a new replicant is targeted', async () => {
+				nodecgReplicant.replicantName = 'foo';
+				await afterNextRenderPromise();
+
+				const firstReplicant = nodecgReplicant.replicant;
+				assert.lengthOf(firstReplicant.listeners('change'), 1);
+
+				nodecgReplicant.replicantName = 'bar';
+				const secondReplicant = nodecgReplicant.replicant;
+
+				assert.lengthOf(firstReplicant.listeners('change'), 0, 'listener is removed from old replicant');
+				assert.lengthOf(secondReplicant.listeners('change'), 1, 'listener is added to new replicant');
+			});
+
+			test('emits `change` events', done => {
+				nodecgReplicant.replicantName = 'foo';
+				Polymer.RenderStatus.afterNextRender(this, () => {
+					nodecgReplicant.addEventListener('change', event => {
+						assert.deepEqual(event.detail, {
+							newVal: 'new',
+							oldVal: 'old',
+							operations: []
+						});
+
+						done();
+					});
+
+					nodecgReplicant.replicant.value = 'new';
+					nodecgReplicant.replicant.emit('change', 'new', 'old', []);
+				});
+			});
+
+			test('forwards .value changes to the replcaint', done => {
+				nodecgReplicant.replicantName = 'foo';
+				Polymer.RenderStatus.afterNextRender(this, () => {
+					nodecgReplicant.value = 'foobar';
+					assert.equal(nodecgReplicant.value, nodecgReplicant.replicant.value);
+					done();
+				});
+			});
+		});
+	</script>
+</body>
+</html>
