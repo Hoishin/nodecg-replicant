@@ -1,3 +1,25 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/nodecg/nodecg-replicant/compare/v0.5.9...v1.0.0) (2017-06-01)
+
+
+### Code Refactoring
+
+* port to Polymer 2 ([#4](https://github.com/nodecg/nodecg-replicant/issues/4)) ([c922226](https://github.com/nodecg/nodecg-replicant/commit/c922226))
+
+
+### BREAKING CHANGES
+
+* Now requires Polymer 2, will not work on Polymer 1.x
+* _replicantChanged has been renamed to _replicantValueChanged. Any instances of _replicantChanged in your code must be changed to _replicantValueChanged.
+* Support has been dropped for defining a default value for a Replicant declared via nodecg-replicant. Suggest using a schema instead to enforce a default value.
+* The timing of when the initial change event happens may not be exactly the same.
+
+
+
 <a name="0.5.9"></a>
 ## [0.5.9](https://github.com/nodecg/nodecg-replicant/compare/v0.5.8...v0.5.9) (2017-04-28)
 
@@ -107,6 +129,3 @@
 
 <a name="0.1.0"></a>
 # 0.1.0 (2015-10-23)
-
-
-
