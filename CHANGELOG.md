@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/nodecg/nodecg-replicant/compare/v1.0.0...v1.0.1) (2017-08-10)
+
+
+### Bug Fixes
+
+* don't bubble `change` events ([3e95ec8](https://github.com/nodecg/nodecg-replicant/commit/3e95ec8))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/nodecg/nodecg-replicant/compare/v0.5.9...v1.0.0) (2017-06-01)
 
