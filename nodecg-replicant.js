@@ -31,8 +31,8 @@ class NodecgReplicant extends Polymer.NodeCGReplicantTargeting(Polymer.MutableDa
 		this._ignoreExposedValueObserver = false;
 		this.dispatchEvent(new CustomEvent('change', {
 			detail: {newVal, oldVal, operations},
-			bubbles: true,
-			composed: true
+			bubbles: false,
+			composed: false
 		}));
 	}
 }
