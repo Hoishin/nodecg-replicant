@@ -1,3 +1,9 @@
+/**
+ * @customElement
+ * @polymer
+ * @appliesMixin Polymer.MutableData
+ * @appliesMixin Polymer.NodeCGReplicantTargeting
+ */
 class NodecgReplicant extends Polymer.NodeCGReplicantTargeting(Polymer.MutableData(Polymer.Element)) {
 	/**
 	 * Fired when the value of the target replicant changes.
