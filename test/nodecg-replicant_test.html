@@ -52,6 +52,11 @@
 
 			setup(() => {
 				nodecgReplicant = fixture('nodecg-replicant');
+
+				/* eslint-disable new-cap */
+				window.nodecg.Replicant('foo').removeAllListeners();
+				window.nodecg.Replicant('bar').removeAllListeners();
+				/* eslint-enable new-cap */
 			});
 
 			test('declares the replicant when just replicant-name is provided', done => {
